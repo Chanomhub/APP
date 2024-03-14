@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_cookie_manager/webview_cookie_manager.dart';
+import 'NavigationItem.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -32,23 +33,13 @@ class _WebViewAppState extends State<WebViewApp> {
     return cookies.any((cookie) => cookie.name == 'hmwp_logged_in_login');
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-      switch (index) {
-        case 0:
-          controller.loadRequest(Uri.parse('https://chanomhub.xyz'));
-          break;
-        case 1:
-          controller.loadRequest(Uri.parse('https://chanomhub.xyz/setting/')); // Example forum page
-          break;
-        case 2:
-          controller.loadRequest(Uri.parse('https://chanomhub.xyz/forums')); // Example forum page
-          break;
-      // Add more cases for other pages
-      }
-    });
-  }
+  // Define your navigation items
+  List<NavigationItem> navigationItems = [
+    NavigationItem(icon: Icons.home, label: 'Home', url: 'https://chanomhub.xyz'),
+    NavigationItem(icon: Icons.account_circle_outlined, label: 'Profile', url: 'https://chanomhub.xyz/setting/', requiresLogin: true),
+    NavigationItem(icon: Icons.forum, label: 'Forums', url: 'https://chanomhub.xyz/forum', requiresLogin: true),
+    NavigationItem(icon: Icons.login, label: 'Login', url: 'https://chanomhub.xyz/newlogin')
+  ];
 
   @override
   void initState() {
@@ -56,7 +47,14 @@ class _WebViewAppState extends State<WebViewApp> {
 
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse('https://chanomhub.xyz'));
+      ..loadRequest(Uri.parse(navigationItems[0].url)) // Load the initial URL
+      ..setNavigationDelegate(NavigationDelegate( // Add this block
+        onPageStarted: (url) {
+          setState(() { // Rebuild on page changes to update bottom bar
+            _selectedIndex = navigationItems.indexWhere((item) => item.url == url);
+          });
+        },
+      ));;
 
     areCookiesPresent().then((hasCookies) {
       setState(() {}); // Force a rebuild after the cookie check
@@ -66,48 +64,30 @@ class _WebViewAppState extends State<WebViewApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: WebViewWidget(controller: controller),
-
-        bottomNavigationBar: FutureBuilder(
-
-          future: areCookiesPresent(),
-
-          builder: (context, snapshot) {
-
-            if (snapshot.hasData && snapshot.data!) { // Cookies are present
-
-              return BottomNavigationBar(
-
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                  BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
-
-                ],
-                currentIndex: _selectedIndex,
-                selectedItemColor: Colors.black,
-                unselectedItemColor: Colors.black,
-                onTap: _onItemTapped,
-                type: BottomNavigationBarType.fixed,
-              );
-            } else { // Cookies are missing
-              return BottomNavigationBar(
-                items: const <BottomNavigationBarItem>[
-                  BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                  BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), label: 'Profile'),
-                  BottomNavigationBarItem(icon: Icon(Icons.forum), label: 'Forums'),
-                ],
-                currentIndex: _selectedIndex,
-                selectedItemColor: Colors.black,
-                unselectedItemColor: Colors.black,
-                onTap: _onItemTapped,
-                type: BottomNavigationBarType.fixed,
-              );
-
-            }
-
-          },
-        )
+      body: WebViewWidget(controller: controller),
+      bottomNavigationBar: FutureBuilder(
+        future: areCookiesPresent(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return BottomNavigationBar(
+              items: navigationItems.where((item) => !item.requiresLogin || snapshot.data!).map((item) =>
+                  BottomNavigationBarItem(
+                    icon: Icon(item.icon),
+                    label: item.label,
+                  )
+              ).toList(),
+              currentIndex: _selectedIndex,
+              selectedItemColor: Colors.amber[800],
+              onTap: (index) {
+                controller.loadRequest(Uri.parse(navigationItems[index].url));
+              },
+            );
+          } else {
+            return const CircularProgressIndicator();
+          }
+        },
+      ),
     );
   }
-
 }
+
