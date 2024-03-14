@@ -26,6 +26,7 @@ class _WebViewAppState extends State<WebViewApp> {
   late final WebViewController controller;
   int _selectedIndex = 0; // For tracking current page
   final cookieManager = WebviewCookieManager();
+  bool isLoggedIn = false;
 
   Future<bool> areCookiesPresent() async {
     // Replace with names of actual cookies you want to check
@@ -44,20 +45,32 @@ class _WebViewAppState extends State<WebViewApp> {
   @override
   void initState() {
     super.initState();
+    // ... (Your existing code)
 
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..loadRequest(Uri.parse(navigationItems[0].url)) // Load the initial URL
-      ..setNavigationDelegate(NavigationDelegate( // Add this block
-        onPageStarted: (url) {
-          setState(() { // Rebuild on page changes to update bottom bar
-            _selectedIndex = navigationItems.indexWhere((item) => item.url == url);
-          });
+      ..addJavaScriptChannel( // Add JavaScript Channel
+        'Flutter',
+        onMessageReceived: (message) {
+          if (message.message == 'loginSuccess') {
+            setState(() {
+              isLoggedIn = true;
+            });
+          } else if (message.message == 'logoutSuccess') {
+            setState(() {
+              isLoggedIn = false;
+            });
+          } else if (message.message.startsWith('navigation:')) {
+            _updateSelectedNavigation(message.message.substring(11));
+          }
         },
-      ));;
+      )
+      ..loadRequest(Uri.parse(navigationItems.isNotEmpty ? navigationItems[0].url : 'https://chanomhub.xyz'));
+  }
 
-    areCookiesPresent().then((hasCookies) {
-      setState(() {}); // Force a rebuild after the cookie check
+  void _updateSelectedNavigation(String url) {
+    setState(() {
+      _selectedIndex = navigationItems.indexWhere((item) => item.url == url);
     });
   }
 
@@ -65,29 +78,23 @@ class _WebViewAppState extends State<WebViewApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: WebViewWidget(controller: controller),
-      bottomNavigationBar: FutureBuilder(
-        future: areCookiesPresent(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return BottomNavigationBar(
-              items: navigationItems.where((item) => !item.requiresLogin || snapshot.data!).map((item) =>
-                  BottomNavigationBarItem(
-                    icon: Icon(item.icon),
-                    label: item.label,
-                  )
-              ).toList(),
-              currentIndex: _selectedIndex,
-              selectedItemColor: Colors.amber[800],
-              onTap: (index) {
-                controller.loadRequest(Uri.parse(navigationItems[index].url));
-              },
-            );
+      bottomNavigationBar: BottomNavigationBar(
+        items: navigationItems.where((item) => !item.requiresLogin || isLoggedIn).map((item) =>
+            BottomNavigationBarItem(
+              icon: Icon(item.icon),
+              label: item.label,
+            )
+        ).toList(),
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: (index) {
+          if (navigationItems[index].requiresLogin && !isLoggedIn) {
+            // Redirect to login page here
           } else {
-            return const CircularProgressIndicator();
+            controller.loadRequest(Uri.parse(navigationItems[index].url));
           }
         },
       ),
     );
   }
 }
-
