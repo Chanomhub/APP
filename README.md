@@ -3,13 +3,13 @@
 *This 'App' project is built for the chanomhub website only. It serves as a gesture of goodwill to show that there is no hidden agenda in the program that could cause problems for users' mobile devices.*
 <br>
 
-|     OS      |   Version   |   UI    |
-| :---: | :---: | :---: |
-| Windows  | 0.0  | ❌ 
-| Mac  | 0.0  | ❌ 
-| Linux  | 0.0  | ❌ 
-| ios  | 0.2A  | ✔️
-| Android  | 0.2A  | ✔️ 
+|     OS      |   Version   |   UI    |   Test    |
+| :---: | :---: | :---: |  :---: |
+| Windows  | 0.0  | ❌ | ❌
+| Mac  | 0.0  | ❌ | ❌
+| Linux  | 0.0  | ❌ | ❌
+| ios  | 0.2A  | ✔️ | ❌
+| Android  | 0.2A  | ✔️ | ✔️ 
 
 
 ***Credit***
