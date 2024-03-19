@@ -8,8 +8,8 @@
 | Windows  | 0.0  | ❌ 
 | Mac  | 0.0  | ❌ 
 | Linux  | 0.0  | ❌ 
-| ios  | 0.2A  | ❌
-| Android  | 0.2A  | ❌ 
+| ios  | 0.2A  | ✔️
+| Android  | 0.2A  | ✔️ 
 
 
 ***Credit***
