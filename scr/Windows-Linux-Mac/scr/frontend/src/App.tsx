@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './styles.css';
+import './App.css';
 
 const App: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
@@ -29,7 +29,7 @@ const App: React.FC = () => {
       <div className="faces-container">
         {data.map((item, index) => (
           <div className="face" key={index}>
-            <img src={item.image} alt={Face ${index}} />
+            <img src={item.image}  />
             <p>{item.title}</p>
           </div>
         ))}
