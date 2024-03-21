@@ -11,7 +11,7 @@ const App: React.FC = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=${page}');
+      const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=' + page);
       const responseData = await response.json();
       setData(responseData);
     } catch (error) {
