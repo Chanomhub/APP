@@ -16,4 +16,4 @@
 <br>
 ̶b̶u̶b̶b̶l̶e̶w̶r̶a̶p̶ 
 <br>
-[Wails](https://github.com/wailsapp/wails): [leaanthony](https://github.com/leaanthony)
+[Wails Framework](https://github.com/wailsapp/wails): [leaanthony](https://github.com/leaanthony)
