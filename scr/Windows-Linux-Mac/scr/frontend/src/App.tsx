@@ -1,8 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
+interface Data {
+ title: string;
+ jetpack_featured_media_url: string;
+
+}
+
 const App: React.FC = () => {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Data[]>([]);
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
@@ -12,8 +18,11 @@ const App: React.FC = () => {
   const fetchData = async () => {
     try {
       const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=' + page);
-      const responseData = await response.json();
-      setData(responseData);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const Data = await response.json();
+      setData(Data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -27,12 +36,19 @@ const App: React.FC = () => {
     <div className="container">
       <h1>Change Faces</h1>
       <div className="faces-container">
-        {data.map((item, index) => (
-          <div className="face" key={index}>
-            <img src={item.image}  />
-            <p>{item.title}</p>
+        {data.length > 0 ? (
+        data.map((Data, index) => (
+          <div className="faace" key={index}>
+            <img src={Data.jetpack_featured_media_url}></img>
+            <p>{Data.title}</p>
           </div>
-        ))}
+        ))
+        ) : (
+
+            <div> Lonading.... </div>
+        )
+        }
+    
       </div>
       <div className="pagination">
         <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
