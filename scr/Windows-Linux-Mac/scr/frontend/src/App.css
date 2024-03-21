@@ -1,0 +1,21 @@
+.faces-container {
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 10px;
+}
+
+.faace {
+
+    background-color: #ccc;
+    padding: auto;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+@media  (max-width: 768px) {
+    .faces-container  {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

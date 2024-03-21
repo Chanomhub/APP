@@ -75,8 +75,10 @@ const App: React.FC = () => {
         {data.length > 0 ? (
         data.map((item, index) => (
           <div className="faace" key={index}>
-            <div className=''>
+            <div className='images'>
+                <picture>
             <img src={item.jetpack_featured_media_url} alt={item.title} />
+            </picture>
             </div>
             <div className='title'>
             <p>{item.title}</p>
