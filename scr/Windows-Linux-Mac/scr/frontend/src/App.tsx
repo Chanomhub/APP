@@ -1,25 +1,47 @@
-import {useState} from 'react';
-import logo from './assets/images/logo-universal.png';
-import './App.css';
-import {Greet} from "../wailsjs/go/main/App";
+import React, { useState, useEffect } from 'react';
+import './styles.css';
 
-function App() {
+const App: React.FC = () => {
+  const [data, setData] = useState<any[]>([]);
+  const [page, setPage] = useState<number>(1);
 
-    return (
-        <div id="App">
-          <header>
+  useEffect(() => {
+    fetchData();
+  }, [page]);
 
-          </header>
-          <body>
-           <div className='Main'>
-            <div>
-                1234
-            </div>
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=${page}');
+      const responseData = await response.json();
+      setData(responseData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
-           </div>
-          </body>
-        </div>
-    )
-}
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
 
-export default App
+  return (
+    <div className="container">
+      <h1>Change Faces</h1>
+      <div className="faces-container">
+        {data.map((item, index) => (
+          <div className="face" key={index}>
+            <img src={item.image} alt={Face ${index}} />
+            <p>{item.title}</p>
+          </div>
+        ))}
+      </div>
+      <div className="pagination">
+        <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+          Previous Page
+        </button>
+        <button onClick={() => handlePageChange(page + 1)}>Next Page</button>
+      </div>
+    </div>
+  );
+};
+
+export default App;
