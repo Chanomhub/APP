@@ -19,4 +19,5 @@
 [Wails Framework](https://github.com/wailsapp/wails): by [Leaanthony](https://github.com/leaanthony)
 <br>
 [React TS](https://github.com/facebook/react): by [Meta](https://github.com/facebook)
+<br>
 [Flutter](https://flutter.dev/): by [Google](https://developers.google.com/learn/topics/flutter)
