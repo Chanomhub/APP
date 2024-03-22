@@ -17,3 +17,5 @@
 ̶b̶u̶b̶b̶l̶e̶w̶r̶a̶p̶ 
 <br>
 [Wails Framework](https://github.com/wailsapp/wails): by [leaanthony](https://github.com/leaanthony)
+<br>
+[React TS](https://github.com/facebook/react): by [Meta](https://github.com/facebook)
