@@ -29,9 +29,14 @@ const App: React.FC = () => {
     }
   };
 
+ 
+
   const fetchData = async (newPage: number) => {
     try {
-      const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=' + newPage);
+      const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=' + newPage, {
+      
+      });
+
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -41,6 +46,8 @@ const App: React.FC = () => {
       console.error('Error fetching data for page', newPage, ':', error);
     }
   };
+
+  
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -71,14 +78,21 @@ const App: React.FC = () => {
   return (
     <div className="container">
       <h1>Change Faces</h1>
+      <div className="pagination">
+        <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+          Previous Page
+        </button>
+        <button onClick={() => handlePageChange(page + 1)}>Next Page</button>
+      </div>
+
       <div className="faces-container">
         {data.length > 0 ? (
         data.map((item, index) => (
-          <div className="faace" key={index}>
-            <div className='images'>
+          <div className="row" key={index}>
+            <div className='block'>
                 <picture>
-            <img src={item.jetpack_featured_media_url} alt={item.title} />
-            </picture>
+                <img src={item.jetpack_featured_media_url} className='images'/>
+                </picture>
             </div>
             <div className='title'>
             <p>{item.title}</p>
@@ -89,12 +103,7 @@ const App: React.FC = () => {
             <div>Loading....</div>
         )}
       </div>
-      <div className="pagination">
-        <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
-          Previous Page
-        </button>
-        <button onClick={() => handlePageChange(page + 1)}>Next Page</button>
-      </div>
+      
     </div>
   );
 };

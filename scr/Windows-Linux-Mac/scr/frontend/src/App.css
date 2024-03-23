@@ -2,20 +2,30 @@
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-
+    grid-template-rows: 500px;
+    grid-template-areas: 
+     "a b c d"
+     "a b c d"
+     "a b c d"
+    ;
     gap: 10px;
+    text-align: right; 
 }
 
-.faace {
 
-    background-color: #ccc;
+.images {
+    width: 400px;
+    height: auto;
+    background-position: center;
+    background-size: cover;
+
+}
+
+
+.row {
+
+    
     padding: auto;
-    border: 1px solid #ddd;
     text-align: center;
 }
 
-@media  (max-width: 768px) {
-    .faces-container  {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
