@@ -3,6 +3,7 @@ import './App.css';
 import fs from 'fs';
 import path from 'path';
 import {  parseHTML  } from 'linkedom';
+import CopyToClipboard from 'react-copy-to-clipboard'; // Import the library
 interface Data {
   jetpack_featured_media_url: string | undefined;
   title: string;
@@ -96,14 +97,16 @@ const extractLinks = (content: string): string[] => {
         />
         </picture>
          <div className="extracted-links">
-                  {extractLinks(item.content).map((link, linkIndex) => ( 
-                    <button key={linkIndex} onClick={() => window.open(link, '_blank')}>
-                      Link {linkIndex + 1} 
-                    </button> 
-                  ))} 
-                </div>
+                  <CopyToClipboard
+                    text={extractLinks(item.content)[0]}
+                    onCopy={handleCopy}
+                  >
+                    <button className="copy-button">
+                      {isCopied ? 'Copied!' : 'Copy Link'}
+                    </button>
+                  </CopyToClipboard>
          
-      
+      </div>
       <div className='title'>
       <p>{item.title}</p>
       </div>
