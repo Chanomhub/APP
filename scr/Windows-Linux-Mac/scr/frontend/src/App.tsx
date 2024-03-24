@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import fs from 'fs';
 import path from 'path';
-import { parseHTML  } from 'linkedom';
+import { parseDocument, parseHTML  } from 'linkedom';
 interface Data {
   jetpack_featured_media_url: string | undefined;
   title: string;
@@ -38,9 +38,9 @@ const App: React.FC = () => {
   }, []); 
 
 const extractLinks = (content: string): string[] => {
-  const { document } = parseHTML(content);
+  const { document } = parseDocument(content);
   return Array.from(document.querySelectorAll('.link'))
-        .map((linkElement: Element) => linkElement.getAttributeNS(null, 'href') || '');
+        .map((linkElement: Element) => linkElement.getAttribute('href') || '');
 };
 
   const handlePageChange = (newPage: number) => {
@@ -94,7 +94,9 @@ const extractLinks = (content: string): string[] => {
         <img src={item.jetpack_featured_media_url} className='images'
         />
         </picture>
-        <a href={item.content}></a>
+         <div className="extracted-links">
+         {extractLinks(item.content)[0]} 
+       </div>
          
       </div>
       <div className='title'>
