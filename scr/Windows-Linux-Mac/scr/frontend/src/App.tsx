@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { parseHTML  } from 'linkedom';
 interface Data {
+  jetpack_featured_media_url: string | undefined;
   title: string;
   imageUrl: string; // Renamed for clarity
   content: string; 
@@ -89,8 +90,11 @@ const extractLinks = (content: string): string[] => {
      <div className="row" key={index}>
       <div className='block'>
         <picture>
-        <img src={item.jetpack_featured_media_url} className='images'/>
+          
+        <img src={item.jetpack_featured_media_url} className='images'
+        />
         </picture>
+        <a href={item.content}></a>
          
       </div>
       <div className='title'>
