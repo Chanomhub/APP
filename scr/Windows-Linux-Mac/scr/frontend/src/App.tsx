@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import fs from 'fs';
 import path from 'path';
-import { parseDocument } from 'linkedom';
+import { parseHTML  } from 'linkedom';
 interface Data {
   title: string;
   imageUrl: string; // Renamed for clarity
@@ -37,9 +37,9 @@ const App: React.FC = () => {
   }, []); 
 
 const extractLinks = (content: string): string[] => {
-  const { document } = parseDocument(content);
+  const { document } = parseHTML(content);
   return Array.from(document.querySelectorAll('.link'))
-        .map((linkElement: Element) => linkElement.getAttribute('href') || '');
+        .map((linkElement: Element) => linkElement.getAttributeNS(null, 'href') || '');
 };
 
   const handlePageChange = (newPage: number) => {
