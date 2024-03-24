@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import fs from 'fs';
 import path from 'path';
-import { parseHTML } from 'linkedom'; // Consider a dedicated HTML parsing library
+import { JSDOM } from 'jsdom';
 
 interface Data {
   title: string;
@@ -37,11 +37,12 @@ const App: React.FC = () => {
     fetchAndProcessData(1);
   }, []); 
 
-  const extractLinks = (content: string): string[] => {
-    const { document } = parseHTML(content);
-    return Array.from(document.querySelectorAll('.link'))
-                .map(linkElement => linkElement.href || '');
-  };
+const extractLinks = (content: string): string[] => {
+  const dom = new JSDOM(content);
+  const document = dom.window.document;
+  return Array.from(document.querySelectorAll('.link'))
+        .map(linkElement => linkElement.href || '');
+};
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
