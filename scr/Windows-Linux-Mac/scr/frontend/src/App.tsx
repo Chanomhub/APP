@@ -96,10 +96,14 @@ const extractLinks = (content: string): string[] => {
         />
         </picture>
          <div className="extracted-links">
-         {extractLinks(item.content)[0]} 
-       </div>
+                  {extractLinks(item.content).map((link, linkIndex) => ( 
+                    <button key={linkIndex} onClick={() => window.open(link, '_blank')}>
+                      Link {linkIndex + 1} 
+                    </button> 
+                  ))} 
+                </div>
          
-      </div>
+      
       <div className='title'>
       <p>{item.title}</p>
       </div>
