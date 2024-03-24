@@ -90,26 +90,22 @@ const extractLinks = (content: string): string[] => {
     {data.length > 0 ? (
     data.map((item, index) => (
      <div className="row" key={index}>
-      <div className='block'>
-        <picture>
-          
-        <img src={item.jetpack_featured_media_url} className='images'
-        />
-        </picture>
-         <div className="extracted-links">
-                  <CopyToClipboard
-                    text={extractLinks(item.content)[0]}
-                    onCopy={handleCopy}
-                  >
-                    <button className="copy-button">
-                      {isCopied ? 'Copied!' : 'Copy Link'}
-                    </button>
-                  </CopyToClipboard>
-         
-      </div>
-      <div className='title'>
+      <div className="block">
+  <picture>
+    <img src={item.jetpack_featured_media_url} className='images' />
+  </picture>
+  <div className="extracted-links">
+    <CopyToClipboard text={extractLinks(item.content)[0]} onCopy={handleCopy}>
+      <button className="copy-button">
+        {isCopied ? 'Copied!' : 'Copy Link'}
+      </button>
+    </CopyToClipboard>
+    <div className='title'>
       <p>{item.title}</p>
-      </div>
+    </div>
+  </div>
+</div>
+
      </div>
     ))
     ) : (
