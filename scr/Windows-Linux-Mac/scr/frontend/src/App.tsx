@@ -31,11 +31,12 @@ const App: React.FC = () => {
     fetchAndProcessData(1);
   }, []);
 
-  const extractLinks = (content: string): string[] => {
-    const { document } = parseHTML(content);
-    return Array.from(document.querySelectorAll('.link'))
-      .map((linkElement: Element) => linkElement.getAttributeNS(null, 'href') || '');
-  };
+ const extractLinks = (content: string): string[] => {
+  const { document } = parseHTML(content);
+  return Array.from(document.querySelectorAll('a.link'))
+    .map((linkElement: Element) => linkElement.getAttribute('href') || '');
+};
+
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
