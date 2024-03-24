@@ -4,8 +4,8 @@ import fs from 'fs';
 import path from 'path';
 
 interface Data {
-  title: string;
-  jetpack_featured_media_url: string;
+ title: string;
+ jetpack_featured_media_url: string;
 }
 
 const App: React.FC = () => {
@@ -29,9 +29,13 @@ const App: React.FC = () => {
     }
   };
 
+ 
+
   const fetchData = async (newPage: number) => {
     try {
-      const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=' + newPage);
+      const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=' + newPage, {
+      
+      });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -42,6 +46,8 @@ const App: React.FC = () => {
       console.error('Error fetching data for page', newPage, ':', error);
     }
   };
+
+  
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -69,16 +75,10 @@ const App: React.FC = () => {
     });
   }, [data]);
 
-  const getRandomLink = () => {
-    const links = document.querySelectorAll('.link');
-    const randomIndex = Math.floor(Math.random() * links.length);
-    return links[randomIndex].getAttribute('href') || '#';
-  };
-
   return (
     <div className="container">
       <div className='Header'>
-        <h1>Chaomhub</h1>
+      <h1>Chaomhub</h1>
       </div>
       <div className="pagination">
         <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
@@ -89,25 +89,23 @@ const App: React.FC = () => {
 
       <div className="faces-container">
         {data.length > 0 ? (
-          data.map((item, index) => (
-            <div className="row" key={index}>
-              <div className='block'>
-                <a href={getRandomLink()} target="_blank" rel="noopener noreferrer">
-                  <picture>
-                    <img src={item.jetpack_featured_media_url} className='images' alt={item.title}/>
-                  </picture>
-                </a>
-              </div>
-              <div className='title'>
-                <p>{item.title}</p>
-              </div>
+        data.map((item, index) => (
+          <div className="row" key={index}>
+            <div className='block'>
+                <picture>
+                <img src={item.jetpack_featured_media_url} className='images'/>
+                </picture>
             </div>
-          ))
+            <div className='title'>
+            <p>{item.title}</p>
+            </div>
+          </div>
+        ))
         ) : (
-          <div>Loading....</div>
+            <div>Loading....</div>
         )}
       </div>
-        
+      
     </div>
   );
 };
