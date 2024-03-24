@@ -75,44 +75,49 @@ const extractLinks = (content: string): string[] => {
 
 
   return (
-     <div className="container">
-   <div className='Header'>
-   <h1>Chaomhub</h1>
-   </div>
-   <div className="pagination">
-    <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
-     Previous Page
-    </button>
-    <button onClick={() => handlePageChange(page + 1)}>Next Page</button>
-   </div>
+    <div className="container">
+      <div className='Header'>
+        <h1>Chaomhub</h1>
+      </div>
+      <div className="pagination">
+        <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
+          Previous Page
+        </button>
+        <button onClick={() => handlePageChange(page + 1)}>Next Page</button>
+      </div>
 
-   <div className="faces-container">
-    {data.length > 0 ? (
-    data.map((item, index) => (
-<div className="row" key={index}> 
-    <div className='block'> 
-        <picture>
-            <img src={item.jetpack_featured_media_url} className='images' />
-        </picture>
-        <div className="extracted-links"> 
-            <CopyToClipboard ... >
-                <button className="copy-button"> 
-                    {isCopied ? 'Copied!' : 'Copy Link'}
-                </button>
-            </CopyToClipboard> 
-        </div>  // <-- Is there a closing </div> here?
-
-        <div className='title'> 
-            <p>{item.title}</p>
-        </div> 
-    </div>  // <-- Closing tag needed before the loop continues
-</div> ) : (
-      <div>Loading....</div>
-    )}
-   </div>
-    
-  </div>
- );
+      <div className="faces-container">
+        {data.length > 0 ? (
+          data.map((item, index) => (
+            <div className="row" key={index}>
+              <div className='block'>
+                <picture>
+                  <img src={item.jetpack_featured_media_url} className='images' />
+                </picture>
+                <div className="extracted-links">
+                  <CopyToClipboard
+                    text={extractLinks(item.content)[0]}
+                    onCopy={handleCopy}
+                  >
+                    <button className="copy-button">
+                      {isCopied ? 'Copied!' : 'Copy Link'}
+                    </button>
+                  </CopyToClipboard>
+                </div>
+                <div className='title'>
+                  <p>{item.title}</p>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+            <div>Loading....</div>
+          )}
+      </div>
+    </div>
+  );
 };
+
+
 
 export default App;
