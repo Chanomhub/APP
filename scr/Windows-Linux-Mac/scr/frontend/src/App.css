@@ -2,7 +2,7 @@
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 500px;
+    grid-template-rows: 300px;
     grid-template-areas: 
      "a b c d"
      "a b c d"
@@ -10,17 +10,39 @@
     ;
     gap: 10px;
     text-align: right; 
+    object-fit: cover;
 }
 
+.block  img {
+
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+    margin: 0%;
+
+}
 
 .images {
-    width: 400px;
+    width: 100%;
     height: auto;
     background-position: center;
     background-size: cover;
 
 }
 
+.images::before {
+
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+}
+.images > img {
+
+    width: 100%;
+    vertical-align: middle;
+    
+}
 
 .row {
 
@@ -29,3 +51,9 @@
     text-align: center;
 }
 
+.Header {
+    background-color: black;
+    
+}
+
+.container {background-color: blueviolet;}

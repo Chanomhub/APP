@@ -77,7 +77,9 @@ const App: React.FC = () => {
 
   return (
     <div className="container">
-      <h1>Change Faces</h1>
+      <div className='Header'>
+      <h1>Chaomhub</h1>
+      </div>
       <div className="pagination">
         <button onClick={() => handlePageChange(page - 1)} disabled={page === 1}>
           Previous Page
