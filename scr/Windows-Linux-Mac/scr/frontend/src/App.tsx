@@ -2,75 +2,61 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import fs from 'fs';
 import path from 'path';
+import { parseHTML } from 'linkedom'; // Consider a dedicated HTML parsing library
 
 interface Data {
   title: string;
-  jetpack_featured_media_url: string;
-  content: string; // Added property for content
+  imageUrl: string; // Renamed for clarity
+  content: string; 
+  links: string[]; // Store extracted links
 }
 
 const App: React.FC = () => {
   const [data, setData] = useState<Data[]>([]);
   const [page, setPage] = useState<number>(1);
-  const [links, setLinks] = useState<string[]>([]); // State to hold links
 
-const handleImageClick = (index: number) => {
-    const itemLinks = data[index].links;
-    if (itemLinks.length > 0) {
-      const randomIndex = Math.floor(Math.random() * itemLinks.length);
-      const randomLink = itemLinks[randomIndex];
-      window.open(randomLink, '_blank'); // Open in a new tab
+  const fetchAndProcessData = async (pageNumber: number) => {
+    try {
+      const apiUrl = `https://api.chanomhub.xyz/fetch-data?page=${pageNumber}`;
+      const response = await fetch(apiUrl);
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const pageData = await response.json() as Data[]; // Type assertion
+
+      setData(pageData);
+    } catch (error) {
+      console.error('Error fetching data:', error); 
     }
   };
- useEffect(() => {
-  fetchFirstPageData();
- }, []);
-const extractLinks = (content: string) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(content, 'text/html');
-    const linkElements = doc.querySelectorAll('.link');
-    return Array.from(linkElements).map(el => el.getAttribute('href') || '');
+
+  // Load initial data on mount
+  useEffect(() => {
+    fetchAndProcessData(1);
+  }, []); 
+
+  const extractLinks = (content: string): string[] => {
+    const { document } = parseHTML(content);
+    return Array.from(document.querySelectorAll('.link'))
+                .map(linkElement => linkElement.href || '');
+  };
+
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+    fetchAndProcessData(newPage);
+  };
+
+  const openRandomLink = (links: string[]) => {
+    if (links.length > 0) {
+      const randomIndex = Math.floor(Math.random() * links.length);
+      window.open(links[randomIndex], '_blank');
+    }
   }
 
- const fetchFirstPageData = async () => {
-  try {
-   const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=1');
-   if (!response.ok) {
-    throw new Error('Network response was not ok');
-   }
-   const firstPageData = await response.json();
-   setData(firstPageData);
-  } catch (error) {
-   console.error('Error fetching first page data:', error);
-  }
- };
-
- 
-
- const fetchData = async (newPage: number) => {
-  try {
-   const response = await fetch('https://api.chanomhub.xyz/fetch-data?page=' + newPage, {
-    
-   });
-
-   if (!response.ok) {
-    throw new Error('Network response was not ok');
-   }
-   const pageData = await response.json();
-   setData(pageData);
-  } catch (error) {
-   console.error('Error fetching data for page', newPage, ':', error);
-  }
- };
-
-  
-
- const handlePageChange = (newPage: number) => {
-  setPage(newPage);
-  fetchData(newPage);
- };
-
- const saveImage = async (url: string) => {
+  // ... (Your saveImage function)
+   const saveImage = async (url: string) => {
   try {
    const response = await fetch(url);
    if (!response.ok) {
@@ -85,30 +71,9 @@ const extractLinks = (content: string) => {
   }
  };
 
-useEffect(() => {
-    const fetchAndProcessData = async () => {
-      try {
-        const response = await fetch(/* ... */); // Your existing fetch logic
-        const pageData = await response.json();
 
-        // Extract links from content
-        const updatedData = pageData.map((item) => ({
-          ...item,
-          links: extractLinks(item.content) 
-        }));
-
-        setData(updatedData);
-      } catch (error) {
-        // ... (Your error handling)
-      }
-    };
-
-    fetchAndProcessData();
-  }, [page]); 
-
-/*
- return (
-  <div className="container">
+  return (
+     <div className="container">
    <div className='Header'>
    <h1>Chaomhub</h1>
    </div>
@@ -141,39 +106,6 @@ useEffect(() => {
     
   </div>
  );
-}; */
-
-  return (
-    <div className="container">
-      {/* ... your existing JSX */}
-       <div className='Header'>
-   <h1>Chaomhub</h1>
-      <div className="faces-container">
-        {data.length > 0 ? (
-          data.map((item, index) => (
-            <div className="row" key={index}>
-              {/* ... */}
-              <div className='block'>
-                <picture>
-                  <img 
-                    src={item.jetpack_featured_media_url} 
-                    className='images'
-                    onClick={() => handleImageClick(index)} // Add click handler
-                  />
-                </picture>
-              </div>
-              {/* ... */}
-             <div className='title'>
-      <p>{item.title}</p>
-            </div>
-          ))
-        ) : (
-          <div>Loading....</div>
-        )}
-      </div>
-    </div>
-  );
 };
 
 export default App;
-
