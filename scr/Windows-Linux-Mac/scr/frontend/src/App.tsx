@@ -3,7 +3,7 @@ import './App.css';
 import fs from 'fs';
 import path from 'path';
 import {  parseHTML  } from 'linkedom';
-import CopyToClipboard from 'react-copy-to-clipboard'; // Import the library
+import CopyToClipboard from 'react-copy-to-clipboard'; 
 interface Data {
   jetpack_featured_media_url: string | undefined;
   title: string;
