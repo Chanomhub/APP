@@ -43,7 +43,19 @@ const App: React.FC = () => {
     fetchAndProcessData(newPage);
   };
 
-  // Your saveImage function
+const extractImages = (content: string): string[] => {
+  const { document } = parseHTML(content);
+  return Array.from(document.querySelectorAll('img'))
+    .map((imgElement: HTMLImageElement) => {
+        // Construct proxy URL if needed
+        const originalSrc = imgElement.getAttribute('src');
+        if (originalSrc && !originalSrc.startsWith('http')) {
+          return "http://127.0.0.1:8765/proxy?url=${originalSrc}";
+        } else {
+          return originalSrc || ''; 
+        }
+    });
+};
 
   return (
     <div className="container">
@@ -62,9 +74,14 @@ const App: React.FC = () => {
           data.map((item, index) => (
             <div className="row" key={index}>
               <div className='block'>
-                <picture>
-                  <img src={item.jetpack_featured_media_url} className='images' />
-                </picture>
+                {/* Enhanced image display */}
+            {extractImages(item.content).map((imageUrl, imageIndex) => (
+              <picture key={imageIndex}>
+                <img src={imageUrl} className='images' />
+              </picture>
+             ))}
+
+            {/* Rest of your block component */}
                 <div className="extracted-links">
                   <CopyToClipboard
                     text={extractLinks(item.content)[0]}

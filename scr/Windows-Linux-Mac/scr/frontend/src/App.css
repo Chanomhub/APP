@@ -1,17 +1,11 @@
-.faces-container {
-
+body .faces-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: 300px;
-    grid-template-areas: 
-     "a b c d"
-     "a b c d"
-     "a b c d"
-    ;
-    gap: 10px;
-    text-align: right; 
-    object-fit: cover;
+    grid-template-rows: auto; /* Flexible rows */
+    gap: 100px;
+    text-align: right;
 }
+
 
 .block  img {
 
@@ -23,11 +17,9 @@
 }
 
 .images {
-    width: 100%;
+    max-width: 100%;
     height: auto;
-    background-position: center;
-    background-size: cover;
-
+    object-fit: contain; /* Or cover, if you prefer */
 }
 
 .images::before {
