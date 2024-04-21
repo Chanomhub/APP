@@ -11,19 +11,11 @@
 | ios  | 0.2A  | ✔️ | ❌
 | Android  | 0.2A  | ✔️ | ✔️ 
 <br>
-***Tools***
-<br>
-- [OSS-Fuzz](https://github.com/google/oss-fuzz)
-<br>
-- [Snyk](https://snyk.io/)
-<br>
-- [Github](https://github.com/)
-<br>
-- [Gitlab][https://gitlab.com/)
-<br>
-<br>
+
+
 
 ***Credit***
+<br>
 ̶b̶u̶b̶b̶l̶e̶w̶r̶a̶p̶ 
 <br>
 [Wails Framework](https://github.com/wailsapp/wails): by [Leaanthony](https://github.com/leaanthony)
