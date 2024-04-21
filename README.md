@@ -10,7 +10,7 @@
 | Linux  | 0.3A  | ✔️ | ✔️
 | ios  | 0.2A  | ✔️ | ❌
 | Android  | 0.2A  | ✔️ | ✔️ 
-
+<br>
 ### All the main tools for developing all projects.
 <br>
 - [OSS-Fuzz](https://github.com/google/oss-fuzz)
@@ -21,8 +21,9 @@
 <br>
 - [Gitlab][https://gitlab.com/)
 <br>
+<br>
 
-***Credit***
+### Credit
 <br>
 ̶b̶u̶b̶b̶l̶e̶w̶r̶a̶p̶ 
 <br>
