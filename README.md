@@ -11,6 +11,16 @@
 | ios  | 0.2A  | ✔️ | ❌
 | Android  | 0.2A  | ✔️ | ✔️ 
 
+### All the main tools for developing all projects.
+<br>
+- [OSS-Fuzz](https://github.com/google/oss-fuzz)
+<br>
+- [Snyk](https://snyk.io/)
+<br>
+- [Github](https://github.com/)
+<br>
+- [Gitlab][https://gitlab.com/)
+<br>
 
 ***Credit***
 <br>
