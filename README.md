@@ -11,7 +11,7 @@
 | ios  | 0.2A  | ✔️ | ❌
 | Android  | 0.2A  | ✔️ | ✔️ 
 <br>
-***All the main tools for developing all projects.***
+***Tools***
 <br>
 - [OSS-Fuzz](https://github.com/google/oss-fuzz)
 <br>
