@@ -11,7 +11,7 @@
 | ios  | 0.2A  | ✔️ | ❌
 | Android  | 0.2A  | ✔️ | ✔️ 
 <br>
-### All the main tools for developing all projects.
+***All the main tools for developing all projects.***
 <br>
 - [OSS-Fuzz](https://github.com/google/oss-fuzz)
 <br>
@@ -23,7 +23,7 @@
 <br>
 <br>
 
-### Credit
+***Credit***
 ̶b̶u̶b̶b̶l̶e̶w̶r̶a̶p̶ 
 <br>
 [Wails Framework](https://github.com/wailsapp/wails): by [Leaanthony](https://github.com/leaanthony)
