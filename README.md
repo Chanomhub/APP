@@ -23,3 +23,7 @@
 [React TS](https://github.com/facebook/react): by [Meta](https://github.com/facebook)
 <br>
 [Flutter](https://flutter.dev/): by [Google](https://developers.google.com/learn/topics/flutter)
+
+
+
+[![Chanomhub's GitHub | Stats](https://stats.quine.sh/Chanomhub/github?theme=dark)](https://quine.sh?utm_source=widgets&utm_campaign=Chanomhub)
