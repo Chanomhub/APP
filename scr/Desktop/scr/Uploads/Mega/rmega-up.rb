@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+
+require 'rmega'
+require 'rmega/cli'
+
+include Rmega::CLI::Helpers
+
+if ARGV.empty?
+  ARGV << '--help'
+else
+  cli_options[:path] = ARGV[0]
+end
+
+OptionParser.new do |opts|
+  opts.banner = "Usage:\n"
+  opts.banner << "\t#{File.basename(__FILE__)} path [options]\n"
+  opts.banner << "Examples:\n"
+  opts.banner << "\t#{File.basename(__FILE__)} /local/file.txt -u email@localhost -r /remote/docs\n"
+  opts.banner << "Options:"
+
+  opts.on("-r PATH", "--remote-path", "Remote path") { |path|
+    cli_options[:remote_path] = path
+  }
+
+  opts.on("-l", "--get-link", "Generate and print the sharable link (witk key)") {
+    cli_options[:get_link] = true
+  }
+
+  apply_opt_parser_options(opts)
+end.parse!
+
+cli_rescue do
+  raise("File not found - #{cli_options[:path]}") unless File.exist?(cli_options[:path])
+
+  user = cli_options[:user] || raise("User email is required")
+  session = Rmega::Session.new.login(user, cli_options[:pass] ||= cli_prompt_password)
+
+  root = session.storage.root
+  node = traverse_storage(root, cli_options[:remote_path].to_s.dup, :only_folders => true)
+
+  raise("Node not found - #{cli_options[:remote_path]}") unless node
+  raise("Node cannot be a file - #{cli_options[:remote_path]}") if node.type == :file
+
+  file = node.upload(cli_options[:path])
+  
+  if cli_options[:get_link]
+    puts file.public_url
+  end
+end

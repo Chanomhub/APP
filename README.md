@@ -5,9 +5,9 @@
 
 |     OS      |   Version   |   UI    |   Test    |
 | :---: | :---: | :---: |  :---: |
-| Windows  | 0.1A  | ✔️ | ✔️
+| Windows  | 0.2A  | ✔️ | ✔️
 | Mac  | 0.0  | ❌ | ❌
-| Linux  | 0.1A  | ✔️ | ✔️
+| Linux  | 0.2A  | ✔️ | ✔️
 | ios  | 0.2A  | ✔️ | ❌
 | Android  | 0.2A  | ✔️ | ✔️ 
 
