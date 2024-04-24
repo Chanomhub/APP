@@ -12,6 +12,10 @@
 | Android  | 0.2A  | ✔️ | ✔️ 
 <br>
 
+Linux:
+```
+Sudo apt update && Sudo apt install libwebkit2gtk-4.0-dev
+```
 
 
 ***Credit***
