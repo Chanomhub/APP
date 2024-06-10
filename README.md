@@ -22,9 +22,9 @@ sudo apt update && sudo apt install nodejs
 <br>
 ̶b̶u̶b̶b̶l̶e̶w̶r̶a̶p̶ 
 <br>
-[Wails Framework](https://github.com/wailsapp/wails): by [Leaanthony](https://github.com/leaanthony)
+ ̶W̶a̶i̶l̶s̶ ̶F̶r̶a̶m̶e̶w̶o̶r̶k̶:̶ ̶b̶y̶ ̶L̶e̶a̶a̶n̶t̶h̶o̶n̶y̶
 <br>
-[React TS](https://github.com/facebook/react): by [Meta](https://github.com/facebook)
+ ̶R̶e̶a̶c̶t̶ ̶T̶S̶:̶ ̶b̶y̶ ̶M̶e̶t̶a̶
 <br>
 [Flutter](https://flutter.dev/): by [Google](https://developers.google.com/learn/topics/flutter)
 
