@@ -1,0 +1,73 @@
+{
+  "name": "Chanomhub",
+  "version": "0.0.5",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac",
+    "build:linux": "electron-builder --linux"
+  },
+  "build": {
+  "appId": "com.chanomhub.desktop",
+  "publish": [
+    {
+      "provider": "github",
+      "owner": "chanomhub",
+      "repo": "APP"
+    }
+  ],
+  "win": {
+    "target": {
+      "target": "nsis",
+      "arch": ["x64", "ia32", "arm64"]
+    },
+    "icon": "chanomhub.ico",
+    "requestedExecutionLevel": "requireAdministrator"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "perMachine": true,
+    "runAfterFinish": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true
+  },
+  "mac": {
+    "target": {
+      "target": "dmg",
+      "arch": ["x64", "arm64"]
+    },
+    "icon": "chanomhub.icns"
+  },
+  "linux": {
+    "target": {
+      "target": "AppImage",
+      "arch": ["x64", "arm64", "armv7l"]
+    },
+    "icon": "chanomhub.png"
+  },
+  "extraMetadata": {
+    "win": {
+      "requestedExecutionLevel": "requireAdministrator"
+    }
+  },
+  "directories": {
+    "output": "dist"
+   }
+  },
+  "author": "CrypticDay",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^30.0.9",
+    "electron-builder": "^24.13.3"
+  },
+  "dependencies": {
+    "electron-dl": "^4.0.0",
+    "electron-log": "^5.1.5",
+    "electron-updater": "^6.2.1"
+  }
+}
+

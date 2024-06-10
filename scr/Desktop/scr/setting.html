@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Setting</title>
+</head>
+<body>
+  <h1>Setting</h1>
+  <form id="settings-form">
+    <label for="download-path">Download Path:</label>
+    <input type="text" id="download-path" name="download-path" required>
+    <button type="submit">Save</button>
+  </form>
+  <script>
+    window.electron.getDownloadPath().then(path => {
+      document.getElementById('download-path').value = path;
+    });
+
+    document.getElementById('settings-form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const path = document.getElementById('download-path').value;
+      window.electron.setDownloadPath(path);
+    });
+  </script>
+</body>
+</html>
+

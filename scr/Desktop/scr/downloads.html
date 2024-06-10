@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Downloads</title>
+  <style>
+    .download-item {
+      margin-bottom: 10px;
+    }
+    .download-actions button {
+      margin-right: 5px;
+    }
+    .progress {
+      width: 200px;
+      height: 20px;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background-color: #4caf50;
+      width: 0%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Downloads</h1>
+  <div id="downloads"></div>
+  <script>
+    function updateDownloads(downloads) {
+      const container = document.getElementById('downloads');
+      container.innerHTML = ''; // Clear current list
+      downloads.forEach(download => {
+        const div = document.createElement('div');
+        div.className = 'download-item';
+        div.innerHTML = `
+          <span>${download.name}</span>
+          <div class="progress">
+            <div class="progress-bar" style="width: ${download.progress || 0}%"></div>
+          </div>
+          <div class="download-actions">
+            <button onclick="window.electron.pauseDownload('${download.id}')">Pause</button>
+            <button onclick="window.electron.resumeDownload('${download.id}')">Resume</button>
+            <button onclick="window.electron.cancelDownload('${download.id}')">Cancel</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.electron.getDownloads().then(updateDownloads);
+    window.electron.onDownloadUpdate(updateDownloads);
+  </script>
+</body>
+</html>
