@@ -14,6 +14,7 @@
 
 # how to Build
 
+Desktop
 ```
 npm build:win
 npm build:linux
