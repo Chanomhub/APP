@@ -12,9 +12,12 @@
 | Android  | 0.0.2  |
 <br>
 
-Linux:
+# how to Build
+
 ```
-sudo apt update && sudo apt install nodejs
+npm build:win
+npm build:linux
+npm build:mac
 ```
 
 
