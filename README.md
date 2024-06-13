@@ -16,9 +16,9 @@
 
 Desktop
 ```
-npm build:win
-npm build:linux
-npm build:mac
+npm build:win // build for windows
+npm build:linux // build for linux
+npm build:mac // build for mac
 ```
 
 
