@@ -12,7 +12,12 @@
 | Android  | 0.0.2  |
 <br>
 
-# how to Build
+# how to run
+```
+npm start
+```
+
+# how to Build?
 
 Desktop
 ```
