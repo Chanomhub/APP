@@ -5,7 +5,7 @@
 
 |     OS      |   Version   |
 | :---: | :---: |
-| Windows  | 0.0.5A  |
+| Windows  | 0.0.5  |
 | Mac  | 0.0  |
 | Linux  | 0.0.5  |
 | ios  | 0.0.2  |
