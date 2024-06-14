@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Setting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+        }
+        label, input, button {
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 7px 10px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Setting</h1>
+    <form id="settings-form">
+        <label for="download-path">Download Path:</label>
+        <input type="text" id="download-path" name="download-path" required>
+        <input type="button" id="browse" value="Browse">
+        <button type="submit">Save</button>
+    </form>
+
+    <script>
+        // Get the download path from Electron
+        window.electron.getDownloadPath().then(path => {
+            document.getElementById('download-path').value = path;
+        });
+
+        // Handle form submission
+        document.getElementById('settings-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const path = document.getElementById('download-path').value;
+            window.electron.setDownloadPath(path);
+        });
+
+        // Handle Browse button click
+        document.getElementById('browse').addEventListener('click', () => {
+            window.electron.showOpenDialog({
+                properties: ['openDirectory']
+            }).then(result => {
+                if (!result.canceled) {
+                    document.getElementById('download-path').value = result.filePaths[0];
+                }
+            }).catch(err => {
+                console.error(err);
+            });
+        });
+    </script>
+</body>
+</html>
