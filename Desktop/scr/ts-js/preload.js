@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// /mnt/data/preload.ts
 const electron_1 = require("electron");
 electron_1.contextBridge.exposeInMainWorld('electron', {
     getFolders: () => electron_1.ipcRenderer.invoke('get-folders'),

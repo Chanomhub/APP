@@ -1,4 +1,3 @@
-// /mnt/data/preload.ts
 import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('electron', {

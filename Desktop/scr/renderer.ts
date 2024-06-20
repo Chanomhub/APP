@@ -3,6 +3,9 @@ import { ipcRenderer } from 'electron';
 
 ipcRenderer.on('navigate', (event, page: string) => {
   switch (page) {
+    case 'Advanced Search':
+	    window.location.href = 'advanced-search.html';
+      break;
     case 'downloads':
       window.location.href = 'downloads.html';
       break;
